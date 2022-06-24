@@ -1,9 +1,7 @@
 import random
-from ascii_art import scissors
-from ascii_art import paper
-from ascii_art import rock
+import ascii_art
 
-list = [rock, paper, scissors]
+list = [ascii_art.rock, ascii_art.paper, ascii_art.scissors]
 
 user_choice = int(input("What do you choose? Type 0 for Rock, 1 for Paper or 2 for Scissors."))
 print(list[user_choice])
