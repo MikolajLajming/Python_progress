@@ -7,7 +7,10 @@ alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n'
 
 
 def clear_console():
-    os.system('clear')
+    if os.name == "nt":
+        _ = os.system('CLS')
+    else:
+        _ = os.system('clear')
 
 
 def good_ending():

@@ -1,0 +1,1 @@
+Simple blind auction
