@@ -1,29 +1,29 @@
 import random
 import ascii_art
 
-list = [ascii_art.rock, ascii_art.paper, ascii_art.scissors]
+art_list = [ascii_art.rock, ascii_art.paper, ascii_art.scissors]
 
 user_choice = int(input("What do you choose? Type 0 for Rock, 1 for Paper or 2 for Scissors."))
-print(list[user_choice])
+print(art_list[user_choice])
 
-computer_choice = random.randint(0,2)
-print(f"the program choosed {computer_choice}", list[computer_choice])
+computer_choice = random.randint(0, 2)
+print(f"the program have chosen {computer_choice}", art_list[computer_choice])
 
 if user_choice != computer_choice:
-  if user_choice == 0:
-    if computer_choice == 1:
-      print("You lost")
+    if user_choice == 0:
+        if computer_choice == 1:
+            print("You lost")
+        else:
+            print("You win!")
+    elif user_choice == 1:
+        if computer_choice == 0:
+            print("You win!")
+        else:
+            print("You lost")
     else:
-      print("You win!")
-  elif user_choice == 1:
-    if computer_choice == 0:
-      print("You win!")
-    else:
-      print("You lost")
-  else:
-    if computer_choice == 0:
-      print("You lost")
-    else:
-      print("You win!")
+        if computer_choice == 0:
+            print("You lost")
+        else:
+            print("You win!")
 else:
-  print("It's a draw!")
+    print("It's a draw!")
