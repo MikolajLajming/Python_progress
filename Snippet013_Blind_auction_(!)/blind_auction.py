@@ -1,15 +1,16 @@
 import os
 from art import logo
 
-# >>>>>>> For testing purpose <<<<<<<
-# bidders = {
+# >>>>>>> For testing purposes <<<<<<<
+# bids = {
 #     "Burzuj": 132,
-#     "Krzysio": 122,
+#     "Krzysio": 112,
 #     "Miki": 123,
-#     "Krysia": 122,
-#     "Kasia": 123,
+#     "Krysia": 112,
+#     "Kasia": 13,
 # }
 
+# >>>>>>> comment out this dictionary while testing <<<<<<<
 bids = {}
 choices = ["yes", "no"]
 next_bidder = True
@@ -65,7 +66,11 @@ def define_winner(bidders):
     else:
         print(f"The winner is {winner_name} with the amount of ${winner_amount}.")
 
+# >>>>>>> For testing purpose <<<<<<<
+# define_winner(bidders=bids)
 
+
+# >>>>>>> comment out this loop while testing <<<<<<<
 while next_bidder:
     clear_console()
     print(logo)
@@ -80,5 +85,3 @@ while next_bidder:
         define_winner(bidders=bids)
     else:
         bids[bidder_name] = bidder_amount
-
-
