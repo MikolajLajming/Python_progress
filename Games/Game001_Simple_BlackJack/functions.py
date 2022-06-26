@@ -30,11 +30,11 @@ def check_value(hand):
         while count_aces != 0 and value > 21:
             value -= 10
             count_aces -= 1
-    if value > 21:
-        bust = True
+    if value >= 21:
+        end = True
     else:
-        bust = False
-    return value, bust
+        end = False
+    return value, end
 
 
 def end_game(player_hand, player_value, computer_hand, computer_value):
