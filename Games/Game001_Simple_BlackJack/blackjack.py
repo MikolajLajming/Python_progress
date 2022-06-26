@@ -1,5 +1,3 @@
-from cards import deck
-from random import randint
 from art import logo
 from errors import error
 import functions

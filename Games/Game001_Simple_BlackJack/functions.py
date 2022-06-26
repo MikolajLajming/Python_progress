@@ -26,11 +26,10 @@ def check_value(hand):
     for card in hand:
         card_value = deck[card]
         value += card_value
-    if value > 21:
-        if "A" in hand:
-            value -= 10
-        else:
-            bust = True
+    if "A" in hand and value > 21:
+        value -= 10
+    else:
+        bust = True
     return value, bust
 
 
