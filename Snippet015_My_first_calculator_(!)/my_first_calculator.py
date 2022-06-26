@@ -40,21 +40,21 @@ def calculator(is_failed, failure_no):
                     print(f"{first_number} {operation} {second_number} = {result}")
                     memory = result
             question1 = str(input(f"Continue with the result {result}? Type Y for yes or N for no: ")).upper()
-            if question1 not in answers:
-                calculator(True, 2)
-            elif question1 == "Y":
+            if question1 == "Y":
                 first_number = memory
-            else:
+            elif question1 == "N":
                 memory = False
                 question2 = str(input("Would you like to continue? Type Y for yes or N for no: ")).upper()
-                if question2 not in answers:
-                    calculator(True, 2)
+                if question2 == "Y":
+                    calculator(False, 0)
                 elif question2 == "N":
                     carry_on = False
                     functions.clear_console()
                     print("Bye!")
                 else:
-                    calculator(False, 0)
+                    calculator(True, 2)
+            else:
+                calculator(True, 2)
 
 
 calculator(False, 0)
