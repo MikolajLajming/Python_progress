@@ -1,0 +1,1 @@
+Simple game of BlackJack with the simplest computer opponent - computer will draw another card if it sees that his hand is less than 11

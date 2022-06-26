@@ -2,8 +2,6 @@ import functions
 from errors import error
 from art import logo
 
-answers = ["Y", "N"]
-
 
 def calculator(is_failed, failure_no):
     functions.clear_console()
