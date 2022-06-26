@@ -1,0 +1,1 @@
+Simple script outputting the number of days in given month in given year

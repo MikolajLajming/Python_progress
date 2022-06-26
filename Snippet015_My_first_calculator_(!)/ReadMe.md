@@ -1,0 +1,1 @@
+My first simple calculator - it adds, subtracts, multiplies and divides
