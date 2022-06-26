@@ -28,14 +28,16 @@ def check_value(hand):
         value += card_value
     if "A" in hand and value > 21:
         value -= 10
-    else:
+    elif value > 21:
         bust = True
+    else:
+        bust = False
     return value, bust
 
 
 def end_game(player_hand, player_value, computer_hand, computer_value):
-    message = f"Your final hand: {', '.join(player_hand)}, final score: {player_value}\n"\
-              f"Computer's final hand: [{', '.join(computer_hand)}], final score: {computer_value}"
+    message = f"    Your final hand: [{', '.join(player_hand)}], final score: {player_value}\n"\
+              f"    Computer's final hand: [{', '.join(computer_hand)}], final score: {computer_value}"
     if player_value <= 21 and computer_value <= 21:
         if player_value < computer_value:
             end_message = "Computer wins! You LOST!"
@@ -43,11 +45,10 @@ def end_game(player_hand, player_value, computer_hand, computer_value):
             end_message = "You WIN!"
         else:
             end_message = "It's a draw!"
-    elif computer_value > 21:
+    elif player_value <= 21 < computer_value:
         end_message = "Computer bust! You WIN!"
     else:
         end_message = "Bust! You LOST!"
-
     return message, end_message
 
 
