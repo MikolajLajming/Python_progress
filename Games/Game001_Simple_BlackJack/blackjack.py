@@ -22,18 +22,16 @@ def blackjack():
             player_hand.append(new_card)
             player_value = functions.check_value(player_hand)[0]
             end = functions.check_value(player_hand)[1]
-            print(end)
-            print(player_value)
             if end:
                 result = functions.end_game(player_hand, player_value, computer_hand, computer_value)
         elif ask == "N":
+            end = True
             while computer_value < 17:
                 new_card = functions.deal_card()
                 computer_hand.append(new_card)
                 computer_value = functions.check_value(computer_hand)[0]
                 print("Computer got another card!")
             result = functions.end_game(player_hand, player_value, computer_hand, computer_value)
-            end = True
         else:
             print(error(1))
     print(f"{result[0]}\n{result[1]}")
