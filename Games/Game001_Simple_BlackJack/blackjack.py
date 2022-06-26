@@ -22,6 +22,8 @@ def blackjack():
             player_hand.append(new_card)
             player_value = functions.check_value(player_hand)[0]
             end = functions.check_value(player_hand)[1]
+            print(end)
+            print(player_value)
             if end:
                 result = functions.end_game(player_hand, player_value, computer_hand, computer_value)
         elif ask == "N":
