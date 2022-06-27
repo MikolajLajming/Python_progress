@@ -2,6 +2,12 @@ from random import randint
 from errors import error
 
 
+def choose_difficulty(option):
+    """Determines difficulty"""
+    difficulty = difficulties[option]
+    return difficulty
+
+
 def choose_random_number():
     """Returns a random number between 1 and 100"""
     random_number = randint(1, 100)
@@ -32,6 +38,13 @@ def determine_too_low_or_to_high(guess, number, mode):
         message = str(error(1))
     return message
 
+
+difficulties = {
+    # "level": [number_of_attempts, hints_on],"
+    "easy": [10, True],
+    "medium": [10, False],
+    "hard": [5, False]
+}
 
 verdicts = {
     100: "Definitely way",
