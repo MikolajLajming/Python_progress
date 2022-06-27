@@ -58,7 +58,7 @@ def guess_the_number(tries, number, easy_mode):
             play = False
             end_game_message = f"You win! The correct answer is {number}"
         else:
-            end_game_message = error(1)
+            print(error(1))
     print(end_game_message)
     loop = True
     while loop:

@@ -9,7 +9,8 @@ def choose_random_number():
 
 
 def determine_too_low_or_to_high(guess, number, mode):
-    """Returns a message with hint if the guess is too low or too high and vaguely how much"""
+    """Returns a message if the guess is too low or too high, on easy mode it returns a hint
+    vaguely how much the guess is off"""
     memory = 0
     if guess > number:
         if mode:
