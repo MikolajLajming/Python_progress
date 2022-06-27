@@ -53,3 +53,4 @@ verdicts = {
     10: "Close, but",
     5: "Just a bit",
 }
+
