@@ -19,20 +19,26 @@ def start_game():
     print("I'm thinking about a number between 1 and 100")
     random_number = functions.choose_random_number()
     # print(f"For testing purposes, the correct answer is {random_number}")
-    option = str(input('Choose difficulty. Type "easy" or "hard": ')).lower()
+    option = str(input('Choose difficulty. Type "easy", "medium" or "hard": ')).lower()
     if option == "easy":
         tries = 10
-        guess_the_number(tries, random_number)
+        easy_mode = True
+        guess_the_number(tries, random_number, easy_mode)
+    elif option == "medium":
+        tries = 10
+        easy_mode = False
+        guess_the_number(tries, random_number, easy_mode)
     elif option == "hard":
         tries = 5
-        guess_the_number(tries, random_number)
+        easy_mode = False
+        guess_the_number(tries, random_number, easy_mode)
     else:
         clear_console()
         print(error(1))
         start_game()
 
 
-def guess_the_number(tries, number):
+def guess_the_number(tries, number, easy_mode):
     print(f"You have {tries} attempts remaining to guess the number.")
     end_game_message = False
     attempts = tries
@@ -41,7 +47,7 @@ def guess_the_number(tries, number):
         guess = int(input("Make a guess: "))
         if guess and guess in range(0, 101) and guess != number:
             attempts -= 1
-            message = functions.determine_too_low_or_to_high(guess, number)
+            message = functions.determine_too_low_or_to_high(guess, number, easy_mode)
             print(message)
             if attempts == 0:
                 play = False

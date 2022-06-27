@@ -8,19 +8,25 @@ def choose_random_number():
     return random_number
 
 
-def determine_too_low_or_to_high(guess, number):
+def determine_too_low_or_to_high(guess, number, mode):
     """Returns a message with hint if the guess is too low or too high and vaguely how much"""
     memory = 0
     if guess > number:
-        for i in verdicts:
-            if i >= (guess - number):
-                memory = i
-        message = f"{verdicts[memory]} too high!"
+        if mode:
+            for i in verdicts:
+                if i >= (guess - number):
+                    memory = i
+            message = f"{verdicts[memory]} too high!"
+        else:
+            message = "Too high!"
     elif guess < number:
-        for i in verdicts:
-            if i >= (number - guess):
-                memory = i
-        message = f"{verdicts[memory]} too low!"
+        if mode:
+            for i in verdicts:
+                if i >= (number - guess):
+                    memory = i
+            message = f"{verdicts[memory]} too low!"
+        else:
+            message = "Too low!"
     else:
         message = str(error(1))
     return message
