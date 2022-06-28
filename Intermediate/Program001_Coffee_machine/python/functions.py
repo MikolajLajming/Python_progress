@@ -23,7 +23,19 @@ def resources_sufficient(product: str):
 
 
 def start_machine(menu: dict):
-    prompt = input(f'What would you like? Available menu is:\n{neatify_list(list(menu.keys()))}\n').lower()
+    menu_items = []
+    not_enough_resources = []
+    for i in menu:
+        menu_items.append(i)
+        for x in dictionaries.MENU[i]["ingredients"]:
+            if dictionaries.MENU[i]["ingredients"][x] > dictionaries.RESOURCES[x][0]:
+                not_enough_resources.append(i)
+    items = [x for x in menu_items if x not in not_enough_resources]
+    if not items:
+        print("no menu available")
+        return False
+    print(f'Available menu is:\n{neatify_list(items)}')
+    prompt = input(f'What would you like?: ').lower()
     return prompt
 
 
@@ -120,6 +132,8 @@ def list_coins(coins_dict: dict):
     return neatify_list(coins)
 
 
-def machine_off():
+def machine_off(no_resources: bool):
     clear_console()
+    if no_resources:
+        print("Machine out of resources!")
     print("Bye!")

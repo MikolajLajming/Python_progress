@@ -58,6 +58,9 @@ while machine_on:
                 choice_loop = True
                 print(f"Machine does not have sufficient amount of {not_sufficient}.")
                 prompt = functions.start_machine(dictionaries.MENU)
+        elif not prompt:
+            switches(False)
+            functions.machine_off(True)
         else:
             functions.clear_console()
             print(errors.error(1))
@@ -81,5 +84,5 @@ while machine_on:
                 ask_to_continue(list(dictionaries.CASES.keys())[3])
 
 
-functions.machine_off()
+functions.machine_off(False)
 
