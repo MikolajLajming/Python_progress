@@ -1,0 +1,1 @@
+Here are some practical snippets which can be used universally in any program
