@@ -85,4 +85,3 @@ while machine_on:
 
 
 functions.machine_off(False)
-
