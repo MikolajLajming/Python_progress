@@ -8,12 +8,7 @@ from python import errors
 def switches(loop: bool):
     global choice_loop
     global machine_on
-    if loop:
-        machine_on = True
-        choice_loop = True
-    else:
-        machine_on = False
-        choice_loop = False
+    machine_on = choice_loop = True if loop else False
 
 
 def ask_to_continue(question_type: str):
@@ -38,8 +33,7 @@ def ask_to_continue(question_type: str):
     switches(loop)
 
 
-choice_loop = True
-machine_on = True
+choice_loop = machine_loop = True
 prompt = functions.start_machine(dictionaries.MENU)
 while machine_on:
     while choice_loop:
