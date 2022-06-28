@@ -13,23 +13,21 @@ def clear_console():
 
 def resources_sufficient(product: str):
     output = False
-    ingredients = []
-    for i in dictionaries.MENU[product]["ingredients"]:
-        if dictionaries.MENU[product]["ingredients"][i] > dictionaries.RESOURCES[i][0]:
-            ingredients.append(i)
+    ingredients = [
+        i for i in dictionaries.MENU[product]["ingredients"]
+        if dictionaries.MENU[product]["ingredients"][i] > dictionaries.RESOURCES[i][0]
+    ]
     if ingredients:
         output = neatify_list(ingredients)
     return output
 
 
 def start_machine(menu: dict):
-    menu_items = []
-    not_enough_resources = []
-    for i in menu:
-        menu_items.append(i)
-        for x in dictionaries.MENU[i]["ingredients"]:
-            if dictionaries.MENU[i]["ingredients"][x] > dictionaries.RESOURCES[x][0]:
-                not_enough_resources.append(i)
+    menu_items = [i for i in menu]
+    not_enough_resources = [
+        i for i in menu_items for x in dictionaries.MENU[i]["ingredients"]
+        if dictionaries.MENU[i]["ingredients"][x] > dictionaries.RESOURCES[x][0]
+    ]
     items = [x for x in menu_items if x not in not_enough_resources]
     if not items:
         print("no menu available")
@@ -40,19 +38,17 @@ def start_machine(menu: dict):
 
 
 def report():
-    maintenance_report = "Current state of resources:\n"
-    for i in dictionaries.RESOURCES:
-        maintenance_report += f"{i.title()}: {dictionaries.RESOURCES[i][0]}{dictionaries.RESOURCES[i][1]}\n"
-    money = calculate_money(dictionaries.MONEY)
-    coins_in_machine = list_coins(dictionaries.MONEY)
-    maintenance_report += f"Money: ${'{:.2f}'.format(money)}: {coins_in_machine}.\n"
+    maintenance_report = "\n".join(list([
+        "Current state of resources:\n",
+        "\n".join(f"{i.title()}: "
+                  f"{dictionaries.RESOURCES[i][0]}{dictionaries.RESOURCES[i][1]}" for i in dictionaries.RESOURCES),
+        f"Money: ${'{:.2f}'.format(calculate_money(dictionaries.MONEY))}: {list_coins(dictionaries.MONEY)}.\n"
+    ]))
     return maintenance_report
 
 
 def calculate_money(dictionary: dict):
-    money = 0
-    for i in dictionary:
-        money += dictionary[i]["amount"] * dictionaries.MONEY[i]["value"]
+    money = sum([dictionary[i]["amount"] * dictionaries.MONEY[i]["value"] for i in dictionary])
     return money
 
 
@@ -73,10 +69,8 @@ def prepare_coffee(product: str, money: dict):
 
 
 def return_change(money: dict, cost: float):
-    change = 0
+    change = sum([money[i]["amount"] * dictionaries.MONEY[i]["value"] for i in money])
     memory = {}
-    for i in money:
-        change += money[i]["amount"] * dictionaries.MONEY[i]["value"]
     modify_machine_money(money, False)
     change = round((change - cost), 2)
     for i in list(money.keys()):
@@ -95,10 +89,8 @@ def return_change(money: dict, cost: float):
 
 
 def neatify_list(my_list: list):
-    items_but_last = []
     if my_list[0] != my_list[-1]:
-        for i in my_list[:-1]:
-            items_but_last.append(i)
+        items_but_last = [i for i in my_list[:-1]]
         output = f"{', '.join(items_but_last)} and {my_list[-1]}"
     else:
         output = my_list[0]
@@ -119,16 +111,20 @@ def modify_machine_money(money: dict, remove: bool):
 
 
 def calculate_change(rest: dict):
-    coins_returned = list_coins(rest)
-    amount_returned = calculate_money(rest)
-    message = f"${amount_returned} returned: {coins_returned}"
+    amount_returned = '{:.2f}'.format(calculate_money(rest))
+    message = f"${amount_returned} returned: {list_coins(rest)}"
     return message
 
 
 def list_coins(coins_dict: dict):
     coins = []
     for i in coins_dict:
-        coins.append(f'{coins_dict[i]["amount"]} {i}')
+        if coins_dict[i]["amount"] == 1 and i == "pennies":
+            coins.append(f'{coins_dict[i]["amount"]} penny')
+        elif coins_dict[i]["amount"] == 1:
+            coins.append(f'{coins_dict[i]["amount"]} {i[:-1]}')
+        else:
+            coins.append(f'{coins_dict[i]["amount"]} {i}')
     return neatify_list(coins)
 
 
