@@ -74,8 +74,7 @@ while machine_on:
             ask_to_continue(list(dictionaries.CASES.keys())[1])
         else:
             prepare_coffee = functions.prepare_coffee(task, change)
-            message = prepare_coffee
-            if message:
+            if prepare_coffee:
                 print(f"Here's your {task}!")
                 ask_to_continue(list(dictionaries.CASES.keys())[2])
             else:
