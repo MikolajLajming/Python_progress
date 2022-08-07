@@ -1,6 +1,12 @@
 import turtle
 import random
 
+
+def ordinal(i):
+    k = i % 10
+    return str("%d%s" % (i, "tsnrhtdd"[(i / 10 % 10 != 1) * (k < 4) * k::4]))
+
+
 screen = turtle.Screen()
 screen.setup(width=800, height=600)
 colors = ["red", "orange", "blue", "yellow", "green", "purple"]
@@ -32,36 +38,42 @@ for i in colors:
     contestant.color(color)
     contestant.penup()
     contestant.goto(-380, turtle_starting_height)
+    contestant.speed("slow")
     turtle_starting_height += 40
     turtles[color] = contestant
 
 turtles[user_bet].pencolor("black")
 
-win = False
+end_race = False
 winner = ""
 turtles_finished = []
 x = 1
-while not win:
+bet_position = 0
+while not end_race:
     turtle_positions = []
     for i in turtles:
         turtles[i].forward(random.randint(0, 10))
         turtle_positions.append(turtles[i].pos()[0])
-        if turtles[i].pos()[0] > 350 and winner == "":
+        if turtles[i].pos()[0] > 345 and winner == "":
             winner = i
             turtles_finished.append(i)
             print(f"{x} position: {i.title()}")
             x += 1
-        if turtles[i].pos()[0] > 350 and winner != "" and i not in turtles_finished:
+        if turtles[i].pos()[0] > 345 and winner != "" and i not in turtles_finished:
             turtles_finished.append(i)
             print(f"{x} position: {i.title()}")
-            x += 1
-    if min(turtle_positions) > 380:
-        win = True
+            if i == user_bet:
+                bet_position = x
+                x += 1
+            else:
+                x += 1
+    if min(turtle_positions) > 385:
+        end_race = True
 
 print(f"{winner.title()} won!")
 if user_bet == winner:
     print(f"Congrats!")
 else:
-    print(f"You lost!")
+    print(f"Your turtle finished {ordinal(bet_position)}. You lost!")
 
 screen.exitonclick()
