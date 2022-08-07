@@ -1,0 +1,1 @@
+This simple program uses Turtle module to create a "painting" similar to Damien's Hirst works
