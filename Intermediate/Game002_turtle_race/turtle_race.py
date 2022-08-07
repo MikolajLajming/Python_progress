@@ -20,12 +20,14 @@ judge.setheading(270)
 
 turtle_starting_height = -120
 for i in colors:
-    locals()[i] = turtle.Turtle(shape="turtle")
-    locals()[i].color(i)
-    locals()[i].penup()
-    locals()[i].goto(-380, turtle_starting_height)
+    contestant = turtle.Turtle(shape="turtle")
+    contestant.color(i)
+    contestant.penup()
+    contestant.goto(-380, turtle_starting_height)
     turtle_starting_height += 40
-    turtles[i] = locals()[i]
+    turtles[i] = contestant
+
+print(turtles)
 
 win = False
 winner = ""
