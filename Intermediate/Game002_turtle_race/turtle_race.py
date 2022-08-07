@@ -4,8 +4,15 @@ import random
 screen = turtle.Screen()
 screen.setup(width=800, height=600)
 colors = ["red", "orange", "blue", "yellow", "green", "purple"]
-user_bet = screen.textinput(title="What is your bet?", prompt=f"Type in one of the colors: {', '.join(colors)}")
-print(f"Your bet is {user_bet.title()}")
+user_bet = ""
+can_we_go_on = False
+while not can_we_go_on:
+    user_bet = screen.textinput(title="What is your bet?", prompt=f"Type in one of the colors: {', '.join(colors)}")
+    if user_bet.lower() not in colors:
+        user_bet = screen.textinput(title="What is your bet?", prompt=f"Type in one of the colors: {', '.join(colors)}")
+    else:
+        can_we_go_on = True
+print(f"You've bet on {user_bet.title()}")
 turtles = {}
 judge = turtle.Turtle(shape="turtle")
 judge.speed("fast")
@@ -20,14 +27,15 @@ judge.setheading(270)
 
 turtle_starting_height = -120
 for i in colors:
+    color = i
     contestant = turtle.Turtle(shape="turtle")
-    contestant.color(i)
+    contestant.color(color)
     contestant.penup()
     contestant.goto(-380, turtle_starting_height)
     turtle_starting_height += 40
-    turtles[i] = contestant
+    turtles[color] = contestant
 
-print(turtles)
+turtles[user_bet].pencolor("black")
 
 win = False
 winner = ""
