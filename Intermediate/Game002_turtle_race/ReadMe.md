@@ -1,0 +1,1 @@
+Simple betting game - turtles move at random speed
