@@ -20,12 +20,11 @@ class TestSine(Scene):
 
     def construct(self):
 
-        ax = Axes(y_range=(-2, 2), x_range=(0, 20), y_length=4, x_length=10)
+        ax = Axes(y_range=(-1, 1), x_range=(0, 6 * np.pi), y_length=4, x_length=10)
         group = VGroup()
-
         for i in range(0, ITERATIONS):
-            # harmonic_amplitude = round((uniform(1, 2) - (i / 20)), 2)
-            harmonic_amplitude = round((2 - (i / 12)), 2)
+            # harmonic_amplitude = round((uniform(0, 1) - (i / 12)), 2)
+            harmonic_amplitude = round((1 - (i / 12)), 2)
             self.amplitudes.append(harmonic_amplitude)
             harmonic_frequency = i + 1
             self.frequencies.append(harmonic_frequency)
@@ -45,22 +44,22 @@ class TestSine(Scene):
         curve_final = ax.plot(lambda x: self.combine_curves(x))
         curve_final.set_color(YELLOW)
         # self.add(curve_final)
-        self.play(Create(ax))
+        # self.play(Create(ax))
         # self.play(Create(group[0]), Create(group[1]), Create(group[2]), Create(group[3]), Create(group[4]), Create(group[5]), Create(group[6]), Create(group[7]), Create(group[8]), Create(group[9]), Create(group[10]), Create(group[11]), run_time=3)
         self.play(Create(group), run_time=5)
         self.play(ReplacementTransform(group, curve_final), run_time=2)
-        self.play(FadeOut(ax))
+        # self.play(FadeOut(ax))
 
     def generate_curve(self, ampl, freq, ph):
         return lambda x: self.math_function(ampl=ampl, freq=freq, ph=ph, x=x)
 
     def math_function(self, ampl, freq, ph, x):
-        return ampl * (1.0 / freq) * np.sin(freq * (x - ph))
+        return ampl * (1 / freq) * np.sin((2 / np.pi) * freq * (x - ph))
 
     def combine_curves(self, x):
         cc = 0
         for n in range(0, ITERATIONS):
-            cc += self.amplitudes[n] * (1.0 / self.frequencies[n]) * np.sin(self.frequencies[n] * (x - self.phases[n]))
+            cc += self.amplitudes[n] * (1 / self.frequencies[n]) * np.sin((2 / np.pi) * self.frequencies[n] * (x - self.phases[n]))
         return cc
 
 # class testSquare(Scene):
