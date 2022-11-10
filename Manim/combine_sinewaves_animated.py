@@ -20,16 +20,16 @@ class TestSine(Scene):
 
     def construct(self):
 
-        ax = Axes(y_range=(-1, 1), x_range=(0, 6 * np.pi), y_length=4, x_length=10)
+        ax = Axes(y_range=(-2, 2), x_range=(0, 2 * (np.pi ** 2)), y_length=4, x_length=3 * np.pi)
         group = VGroup()
         for i in range(0, ITERATIONS):
-            # harmonic_amplitude = round((uniform(0, 1) - (i / 12)), 2)
-            harmonic_amplitude = round((1 - (i / 12)), 2)
+            harmonic_amplitude = round((uniform(1, 2) - (i / 12)), 2)
+            # harmonic_amplitude = round((2 - (i / 12)), 2)
             self.amplitudes.append(harmonic_amplitude)
             harmonic_frequency = i + 1
             self.frequencies.append(harmonic_frequency)
-            # harmonic_phase = uniform(0.0, 1.0)
-            harmonic_phase = 0
+            harmonic_phase = uniform(0.0, 1.0) * (np.pi**2)
+            # harmonic_phase = 0 * (np.pi**2)
             self.phases.append(harmonic_phase)
             harmonic_curve = ax.plot(
                 self.generate_curve(harmonic_amplitude, harmonic_frequency, harmonic_phase)
@@ -45,9 +45,10 @@ class TestSine(Scene):
         curve_final.set_color(YELLOW)
         # self.add(curve_final)
         # self.play(Create(ax))
-        # self.play(Create(group[0]), Create(group[1]), Create(group[2]), Create(group[3]), Create(group[4]), Create(group[5]), Create(group[6]), Create(group[7]), Create(group[8]), Create(group[9]), Create(group[10]), Create(group[11]), run_time=3)
-        self.play(Create(group), run_time=5)
+        self.play(Create(group[0]), Create(group[1]), Create(group[2]), Create(group[3]), Create(group[4]), Create(group[5]), Create(group[6]), Create(group[7]), Create(group[8]), Create(group[9]), Create(group[10]), Create(group[11]), run_time=3)
+        # self.play(Create(group), run_time=5)
         self.play(ReplacementTransform(group, curve_final), run_time=2)
+        self.wait(4)
         # self.play(FadeOut(ax))
 
     def generate_curve(self, ampl, freq, ph):
