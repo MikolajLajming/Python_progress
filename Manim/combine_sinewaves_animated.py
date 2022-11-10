@@ -62,8 +62,3 @@ class TestSine(Scene):
         for n in range(0, ITERATIONS):
             cc += self.amplitudes[n] * (1 / self.frequencies[n]) * np.sin((2 / np.pi) * self.frequencies[n] * (x - self.phases[n]))
         return cc
-
-# class testSquare(Scene):
-#     def construct(self):
-#         square = Square(color=RED, fill_opacity=0.5)
-#         self.play(DrawBorderThenFill(square, run_time=4))
