@@ -16,15 +16,15 @@ screen.onkey(snake.right, "Right")
 screen.onkey(snake.up, "Up")
 screen.onkey(snake.down, "Down")
 
-
-while True:
+game_on = True
+while game_on:
     screen.update()
     time.sleep(0.1)
     snake.move()
 
     if snake.head.distance(food) < 10:
-        print("om nom nom")
         food.refresh()
+
 
 
 
