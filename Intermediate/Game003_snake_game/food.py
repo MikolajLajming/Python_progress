@@ -1,8 +1,9 @@
 from turtle import Turtle
 from random import randint
+from snake import SEGMENT_POSITIONS
 
 
-def divisible_random(a=-280, b=280, n=20):
+def divisible_random(a=-260, b=260, n=20):
     result = randint(a, b)
     while result % n != 0:
         result = randint(a, b)
@@ -17,7 +18,8 @@ class Food(Turtle):
         self.shapesize(stretch_wid=0.5, stretch_len=0.5)
         self.color("blue")
         self.speed("fastest")
-        self.refresh()
+        self.refresh(SEGMENT_POSITIONS)
 
-    def refresh(self):
-        self.goto(divisible_random(), divisible_random())
+    def refresh(self, snake_position):
+        if (divisible_random(), divisible_random()) not in snake_position:
+            self.goto(divisible_random(), divisible_random())
