@@ -26,7 +26,7 @@ while game_on:
     snake_position = []
     for n in snake.segments:
         snake_position.append(n.pos())
-        if n != snake.head and snake.head.distance(n.pos()) < 10:
+        if n != snake.head and snake.head.distance(n.pos()) < 1:
             game_on = False
     if snake.head.xcor() >= 270 or snake.head.ycor() >= 270 or snake.head.xcor() <= -270 or snake.head.ycor() <= -270:
         game_on = False
