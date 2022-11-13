@@ -14,6 +14,8 @@ class Ball(Turtle):
         self.last_x_position = 0
         self.last_y_position = 0
         self.angle = 0
+        self.going_up = 0
+        self.towards_right = 0
 
     def save_position(self):
         self.last_x_position = self.xcor()
@@ -26,23 +28,27 @@ class Ball(Turtle):
         y_speed = (self.angle * BALL_SPEED) if going_up else (self.angle * -1 * BALL_SPEED)
         self.goto((self.last_x_position + x_speed), (self.last_y_position + y_speed))
 
-    def move_ball(self, hit_paddle):
-        towards_right = True if self.last_x_position < self.xcor() else False
-        if hit_paddle:
-            towards_right = not towards_right
-        going_up = True if self.last_y_position < self.ycor() else False
+    def move_ball(self, paddle_hit, top_half):
+        self.going_up = True if self.last_y_position < self.ycor() else False
         if self.ycor() >= 280 or self.ycor() <= - 280:
-            going_up = not going_up
-        self.move(towards_right=towards_right, going_up=going_up)
+            self.going_up = not self.going_up
+        self.towards_right = True if self.last_x_position < self.xcor() else False
+        if paddle_hit:
+            self.towards_right = not self.towards_right
+            self.going_up = top_half
+        self.move(towards_right=self.towards_right, going_up=self.going_up)
 
-    def initial_move(self):
+    def initial_move(self, towards_right):
         self.goto(0, uniform(-280, 280))
         coin_flip = randint(0, 1)
         self.angle = uniform(0, 1)
         if coin_flip == 0:
-            self.move(towards_right=True, going_up=True)
+            self.move(towards_right=towards_right, going_up=True)
         else:
-            self.move(towards_right=True, going_up=False)
+            self.move(towards_right=towards_right, going_up=False)
 
-    def reset(self):
+    def reset_ball(self, towards_right):
+        self.last_x_position = 0
+        self.last_y_position = 0
         self.goto(0, 0)
+        self.initial_move(towards_right)
