@@ -21,5 +21,6 @@ class Food(Turtle):
         self.refresh(SEGMENT_POSITIONS)
 
     def refresh(self, snake_position):
-        if (divisible_random(), divisible_random()) not in snake_position:
-            self.goto(divisible_random(), divisible_random())
+        new_position = (divisible_random(), divisible_random())
+        if new_position not in snake_position:
+            self.goto(new_position)

@@ -36,8 +36,10 @@ while game_on:
         scoreboard.increase_score()
         screen.update()
     if not game_on:
-        scoreboard.game_over()
+        scoreboard.reset()
+        snake.snake_reset()
         screen.update()
+        game_on = True
     else:
         snake.move()
     time.sleep(0.2)
