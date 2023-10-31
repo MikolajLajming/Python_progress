@@ -1,6 +1,7 @@
 from turtle import Turtle
 
 SEGMENT_POSITIONS = [(0, 0), (-20, 0), (-40, 0)]
+CEMENTARY = (1000, 1000)
 MOVE_DISTANCE = 20
 UP = 90
 DOWN = 270
@@ -51,3 +52,10 @@ class Snake:
         if self.head.xcor() - MOVE_DISTANCE != self.neck.xcor():
             self.head.setheading(LEFT)
 
+    def snake_reset(self):
+        for i in self.segments:
+            i.goto(CEMENTARY)
+        self.segments.clear()
+        self.create_snake()
+        self.neck = self.segments[1]
+        self.head = self.segments[0]
