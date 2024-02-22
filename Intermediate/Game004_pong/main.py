@@ -58,28 +58,29 @@ while game_on:
         r_paddle_y_cor = r_paddle.ycor()
         l_paddle_y_cor = l_paddle.ycor()
         if ball_x_cor >= 350 or ball_x_cor <= -350:
-            ball_x_cor = ball.last_x_position
-            ball_y_cor = ball.last_y_position
             right_side = True if ball_x_cor > 0 else False
-            if (r_paddle_y_cor - 65) < ball_y_cor < (r_paddle_y_cor + 65) and right_side \
-                    or (l_paddle_y_cor - 65) < ball_y_cor < (l_paddle_y_cor + 65) and not right_side:
+            if dist([r_paddle_y_cor], [ball.ycor()]) <= 65 and right_side \
+                    or dist([l_paddle_y_cor], [ball.ycor()]) <= 65 and not right_side:
                 paddle_y_cor = r_paddle_y_cor if right_side else l_paddle_y_cor
                 if ball_y_cor > paddle_y_cor:
-                    ball.angle = (((dist([paddle_y_cor], [ball.ycor()])) / 65) * 90) + 1
-                    print(ball.angle)
+                    ball.angle = (((dist([paddle_y_cor], [ball.ycor()])) / 60) * 80)
                     ball.move_ball(True, True)
+                    ball_immune_to_paddle = 100
                     update_screen()
                 elif ball_y_cor <= paddle_y_cor:
-                    ball.angle = (((dist([paddle_y_cor], [ball.ycor()])) / 65) * 90) + 1
-                    print(ball.angle)
+                    ball.angle = (((dist([paddle_y_cor], [ball.ycor()])) / 60) * 80)
                     ball.move_ball(True, False)
+                    ball_immune_to_paddle = 100
                     update_screen()
             else:
                 did_right_player_lost = right_side
-                if did_right_player_lost:
+                if did_right_player_lost and ball.towards_right:
+                    finish_turn(who_lost=did_right_player_lost)
+                elif not did_right_player_lost and not ball.towards_right:
                     finish_turn(who_lost=did_right_player_lost)
                 else:
-                    finish_turn(who_lost=did_right_player_lost)
+                    ball.move_ball(False, False)
+                    update_screen()
         else:
             ball.move_ball(False, False)
             update_screen()

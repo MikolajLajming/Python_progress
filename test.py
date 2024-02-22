@@ -1,7 +1,5 @@
-import numpy
+import math
 
+x = math.dist([-1.0], [6.0])
 
-angle = 45
-
-print(numpy.sin(angle * (numpy.pi/180)))
-print(1/numpy.sqrt(2))
+print(x)

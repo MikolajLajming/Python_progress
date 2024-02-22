@@ -1,6 +1,7 @@
 from turtle import Turtle
 from random import uniform, getrandbits
 import numpy as np
+from math import fabs
 
 BALL_SPEED = 10
 
@@ -25,11 +26,10 @@ class Ball(Turtle):
 
     def move(self, towards_right, going_up):
         self.save_position()
-        y_speed = (np.sin(self.angle * (np.pi/180))) if going_up else (np.sin(self.angle * (np.pi/180)) * -1)
-        print(self.angle)
-        print(y_speed)
-        x_speed = (np.cos(self.angle * (np.pi/180))) if towards_right else (np.cos(self.angle * (np.pi/180)) * -1)
-        print(x_speed)
+        y_speed = fabs(np.sin(self.angle * (np.pi/180))) if going_up \
+            else (fabs(np.sin(self.angle * (np.pi/180))) * -1)
+        x_speed = fabs(np.cos(self.angle * (np.pi/180))) if towards_right \
+            else (fabs(np.cos(self.angle * (np.pi/180))) * -1)
         self.goto((self.last_x_position + (x_speed * BALL_SPEED)), (self.last_y_position + (y_speed * BALL_SPEED)))
 
     def move_ball(self, paddle_hit, top_half):
