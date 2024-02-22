@@ -1,6 +1,7 @@
-from math import dist
+import numpy
 
-a = [-10]
-b = [3]
 
-print(dist(a, b))
+angle = 45
+
+print(numpy.sin(angle * (numpy.pi/180)))
+print(1/numpy.sqrt(2))

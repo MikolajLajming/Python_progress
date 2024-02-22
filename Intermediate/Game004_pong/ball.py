@@ -1,7 +1,8 @@
 from turtle import Turtle
-from random import randint, uniform
+from random import uniform, getrandbits
+import numpy as np
 
-BALL_SPEED = 5
+BALL_SPEED = 10
 
 
 class Ball(Turtle):
@@ -14,7 +15,7 @@ class Ball(Turtle):
         self.goto(0, 0)
         self.last_x_position = 0
         self.last_y_position = 0
-        self.angle = 1
+        self.angle = 0
         self.going_up = 0
         self.towards_right = 0
 
@@ -24,9 +25,12 @@ class Ball(Turtle):
 
     def move(self, towards_right, going_up):
         self.save_position()
-        y_speed = (self.angle * BALL_SPEED) if going_up else (self.angle * BALL_SPEED * -1)
-        x_speed = BALL_SPEED if towards_right else (BALL_SPEED * -1)
-        self.goto((self.last_x_position + x_speed), (self.last_y_position + y_speed))
+        y_speed = (np.sin(self.angle * (np.pi/180))) if going_up else (np.sin(self.angle * (np.pi/180)) * -1)
+        print(self.angle)
+        print(y_speed)
+        x_speed = (np.cos(self.angle * (np.pi/180))) if towards_right else (np.cos(self.angle * (np.pi/180)) * -1)
+        print(x_speed)
+        self.goto((self.last_x_position + (x_speed * BALL_SPEED)), (self.last_y_position + (y_speed * BALL_SPEED)))
 
     def move_ball(self, paddle_hit, top_half):
         self.going_up = True if self.last_y_position < self.ycor() else False
@@ -40,14 +44,14 @@ class Ball(Turtle):
 
     def initial_move(self, towards_right):
         self.goto(0, uniform(-285, 285))
-        coin_flip = randint(0, 1)
-        self.angle = uniform(0, 1)
-        if coin_flip == 0:
-            self.move(towards_right=towards_right, going_up=True)
+        coin_flip = getrandbits(1)
+        self.angle = 45
+        if coin_flip:
+            self.move(towards_right=towards_right, going_up=coin_flip)
         else:
-            self.move(towards_right=towards_right, going_up=False)
+            self.move(towards_right=towards_right, going_up=coin_flip)
 
-    def reset_ball(self, towards_right):
+    def serve_ball(self, towards_right):
         self.last_x_position = 0
         self.last_y_position = 0
         self.initial_move(towards_right)

@@ -4,6 +4,7 @@ from ball import Ball
 from scoreboard import Scoreboard
 from math import dist
 from board import Stripes
+import random
 import time
 
 screen = Screen()
@@ -21,68 +22,66 @@ screen.onkeypress(r_paddle.go_up, "Up")
 screen.onkeypress(r_paddle.go_down, "Down")
 screen.onkeypress(l_paddle.go_up, "w")
 screen.onkeypress(l_paddle.go_down, "s")
-screen.update()
-ball.initial_move(True)
-screen.update()
 
-game = True
+
+def update_screen():
+    screen.update()
+    time.sleep(0.02)
+
+
+def finish_turn(who_lost):
+    for i in range(10):
+        ball.move_ball(False, False)
+        update_screen()
+    scoreboard.increase_score(not who_lost)
+    for i in range(50):
+        update_screen()
+    ball.serve_ball(who_lost)
+
+
+update_screen()
+ball.initial_move(bool(random.getrandbits(1)))
+update_screen()
+time.sleep(1)
 game_on = True
 
-while game:
-    time.sleep(1)
-    while game_on:
-        if scoreboard.P2_score >= 10 or scoreboard.P1_score >= 10:
-            game = False
-            game_on = False
-            scoreboard.game_over()
-            ball.hide_ball()
-            screen.update()
-        else:
-            screen.update()
-            ball.show_ball()
-            ball_x_cor = ball.xcor()
-            ball_y_cor = ball.ycor()
-            r_paddle_y_cor = r_paddle.ycor()
-            l_paddle_y_cor = l_paddle.ycor()
-            if ball_x_cor >= 350 or ball_x_cor <= -350:
-                right_paddle = True if ball_x_cor > 0 else False
-                if (r_paddle_y_cor - 60) < ball_y_cor < (r_paddle_y_cor + 60) and right_paddle \
-                        or (l_paddle_y_cor - 60) < ball_y_cor < (l_paddle_y_cor + 60) and not right_paddle:
-                    paddle_y_cor = r_paddle_y_cor if right_paddle else l_paddle_y_cor
-                    if ball_y_cor > paddle_y_cor:
-                        ball.angle = (dist([paddle_y_cor], [ball.ycor()])) / 60
-                        ball.move_ball(True, True)
-                        screen.update()
-                        time.sleep(0.01)
-                    elif ball_y_cor <= paddle_y_cor:
-                        ball.angle = (dist([paddle_y_cor], [ball.ycor()])) / 60
-                        ball.move_ball(True, False)
-                        screen.update()
-                        time.sleep(0.01)
-                else:
-                    if right_paddle:
-                        for i in range(10):
-                            ball.move_ball(False, False)
-                            screen.update()
-                            time.sleep(0.01)
-                        scoreboard.increase_score(False)
-                        for i in range(50):
-                            screen.update()
-                            time.sleep(0.01)
-                        ball.reset_ball(not right_paddle)
-                    else:
-                        for i in range(10):
-                            ball.move_ball(False, False)
-                            screen.update()
-                            time.sleep(0.01)
-                        scoreboard.increase_score(True)
-                        for i in range(50):
-                            screen.update()
-                            time.sleep(0.01)
-                        ball.reset_ball(not right_paddle)
+while game_on:
+    if scoreboard.P2_score >= 10 or scoreboard.P1_score >= 10:
+        game_on = False
+        scoreboard.game_over()
+        ball.hide_ball()
+        screen.update()
+    else:
+        screen.update()
+        ball_x_cor = ball.xcor()
+        ball_y_cor = ball.ycor()
+        r_paddle_y_cor = r_paddle.ycor()
+        l_paddle_y_cor = l_paddle.ycor()
+        if ball_x_cor >= 350 or ball_x_cor <= -350:
+            ball_x_cor = ball.last_x_position
+            ball_y_cor = ball.last_y_position
+            right_side = True if ball_x_cor > 0 else False
+            if (r_paddle_y_cor - 65) < ball_y_cor < (r_paddle_y_cor + 65) and right_side \
+                    or (l_paddle_y_cor - 65) < ball_y_cor < (l_paddle_y_cor + 65) and not right_side:
+                paddle_y_cor = r_paddle_y_cor if right_side else l_paddle_y_cor
+                if ball_y_cor > paddle_y_cor:
+                    ball.angle = (((dist([paddle_y_cor], [ball.ycor()])) / 65) * 90) + 1
+                    print(ball.angle)
+                    ball.move_ball(True, True)
+                    update_screen()
+                elif ball_y_cor <= paddle_y_cor:
+                    ball.angle = (((dist([paddle_y_cor], [ball.ycor()])) / 65) * 90) + 1
+                    print(ball.angle)
+                    ball.move_ball(True, False)
+                    update_screen()
             else:
-                ball.move_ball(False, False)
-                screen.update()
-                time.sleep(0.01)
+                did_right_player_lost = right_side
+                if did_right_player_lost:
+                    finish_turn(who_lost=did_right_player_lost)
+                else:
+                    finish_turn(who_lost=did_right_player_lost)
+        else:
+            ball.move_ball(False, False)
+            update_screen()
 
 screen.exitonclick()
