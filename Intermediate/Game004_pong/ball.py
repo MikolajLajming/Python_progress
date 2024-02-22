@@ -1,7 +1,7 @@
 from turtle import Turtle
 from random import randint, uniform
 
-BALL_SPEED = 3
+BALL_SPEED = 5
 
 
 class Ball(Turtle):
@@ -30,7 +30,7 @@ class Ball(Turtle):
 
     def move_ball(self, paddle_hit, top_half):
         self.going_up = True if self.last_y_position < self.ycor() else False
-        if self.ycor() >= 280 and self.going_up or self.ycor() <= - 280 and not self.going_up:
+        if self.ycor() >= 285 and self.going_up or self.ycor() <= - 285 and not self.going_up:
             self.going_up = not self.going_up
         self.towards_right = True if self.last_x_position < self.xcor() else False
         if paddle_hit:
@@ -39,7 +39,7 @@ class Ball(Turtle):
         self.move(towards_right=self.towards_right, going_up=self.going_up)
 
     def initial_move(self, towards_right):
-        self.goto(0, uniform(-280, 280))
+        self.goto(0, uniform(-285, 285))
         coin_flip = randint(0, 1)
         self.angle = uniform(0, 1)
         if coin_flip == 0:
@@ -51,3 +51,9 @@ class Ball(Turtle):
         self.last_x_position = 0
         self.last_y_position = 0
         self.initial_move(towards_right)
+
+    def hide_ball(self):
+        self.hideturtle()
+
+    def show_ball(self):
+        self.showturtle()
