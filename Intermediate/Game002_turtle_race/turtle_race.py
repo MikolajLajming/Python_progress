@@ -3,8 +3,7 @@ import random
 
 
 def ordinal(number):
-    k = number % 10
-    return str("%d%s" % (number, "tsnrhtdd"[(number / 10 % 10 != 1) * (k < 4) * k::4]))
+    return str("%d%s" % (number, "tsnrhtdd"[number % 5 * (number % 100 ^ 15 > 4 > number % 10)::4]))
 
 
 screen = turtle.Screen()
